@@ -1,10 +1,11 @@
 name: simple_feature_flags
-description: >
-  A library useful for applications or for sharing on pub.dartlang.org.
-version: 0.0.1
-#author: <your name> <email@example.com>
-#homepage: https://www.example.com
-#dependencies:
-#  lib_name: any
+version: 0.1.0
+author: Ole Martin Gjersvik <olem@olem.org>
+description: "This is a simple library to handle feature flags. Its is environment\
+  \ agnostic.\r\nA feature is considered enabled if any of the sources enable it."
+homepage: https://github.com/dartup/simple_feature_flags
+environment:
+  sdk: '>=1.9.0 <2.0.0'
+documentation: http://www.dartdocs.org/documentation/simple_feature_flags/0.11.5+4/index.html#simple_feature_flags
 dev_dependencies:
-  unittest: any
+  unittest: '>=0.11.5 <0.12.0'

@@ -28,7 +28,6 @@ Future<bool> whenOn(String feature) async{
 
 /// works like whenOff only that it returns false when the feature is removed from all sources.
 Future<bool> whenOff(String feature) async{
-  // TODO unittest me;
   if(isOff(feature)){
     return false;
   }
