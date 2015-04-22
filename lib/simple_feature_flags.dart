@@ -17,7 +17,6 @@ bool isOff(String feature) => !_union.contains(feature);
 /// This future will never throw or return any other value than true. But it may never fire.
 /// If the feature alredy exist then the future will complete fast with true.
 Future<bool> whenOn(String feature) async{
-  // TODO unittest me;
   if(isOn(feature)){
     return true;
   }
@@ -47,16 +46,21 @@ void addSource(String name, Iterable<String> source){
   _updateUnion();
 }
 
-/// Removes a source. If there is not a source by that name this function is a noop.
+/// Removes a source if it exsist.
 void removeSource(String name){
   if(_sources.remove(name) != null){
     _updateUnion();
   }
 }
 
+/// Removes all sources. May be useful to reset after unittest.
+void removeAll(){
+  _sources.clear();
+  _updateUnion();
+}
+
 /// get the names of all sources registered.
 List<String> sources(){
-  // TODO unittest me;
   return _sources.keys.toList();
 }
 
@@ -75,12 +79,6 @@ Set<String> get(Iterable<String> names){
     .fold(new Set(), (Set a,Set b)=> a.union(b));
 }
 
-/// Removes all sources. May be useful to reset after unittest.
-void removeAll(){
-  // TODO needs work. Do something with _whenOn and _whenOff.
-  _sources.clear();
-  _union.clear();
-}
 Map<String,Completer<bool>> _whenOn = {};
 Map<String,Completer<bool>> _whenOff = {};
 Map<String,Set<String>> _sources = {};
