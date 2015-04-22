@@ -51,13 +51,42 @@ main() {
       feature.addSource('test_source', ['test']);
       
       var future = feature.whenOn('test2');
-      bool notYet = await future.timeout(new Duration(milliseconds:100),onTimeout: () => false);
-      expect(notYet, isFalse);
+      bool notYet = await future.timeout(new Duration(milliseconds:100),onTimeout: () => null);
+      expect(notYet, isNull);
       feature.addSource('test_source2', ['test2']);
       
       return expect(await future.timeout(new Duration(milliseconds:100)), isTrue);
     });
+  });
+  
+  group('whenOff', (){
+    test('If its not there shuld complete quikly',() async {
+      var future = feature.whenOff('test').timeout(new Duration(milliseconds:100));
+      
+      expect(await future, isFalse);
+    });
     
+    test('If never removed shuld never complete',() async {
+      feature.addSource('test_source', ['test']);
+      try{
+        await feature.whenOff('test').timeout(new Duration(milliseconds:100));
+        fail('Shuld not have completed');
+      }catch(e){
+        expect(e,new isInstanceOf<TimeoutException>('TimeoutException'));
+        return;
+      }
+    });
+    
+    test('Completes if removed later',() async {
+      feature.addSource('test_source', ['test']);
+      
+      var future = feature.whenOff('test');
+      bool notYet = await future.timeout(new Duration(milliseconds:100),onTimeout: () => null);
+      expect(notYet, isNull);
+      feature.removeSource('test_source');
+      
+      return expect(await future.timeout(new Duration(milliseconds:100)), isFalse);
+    });
   });
   
   group('sources', (){

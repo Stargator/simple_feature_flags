@@ -66,13 +66,11 @@ List<String> sources(){
 
 /// get a set of all fatures that are enabled.
 Set<String> getAll(){
-  // TODO unittest me;
   return new Set.from(_union);
 }
 
 /// return a union of sources metions. Sources that do not exist are ignored.
 Set<String> get(Iterable<String> names){
-  // TODO unittest me;
   return names
     .where(_sources.containsKey)
     .map((name)=> _sources[name])
